@@ -1,19 +1,18 @@
-import { Cart } from './cart.entity';
 import { Voucher } from './voucher.entity';
 
 export enum UserRole {
-    ADMIN,
-    BUYER,
-    SELLER
+    ADMIN = 'ADMIN',
+    BUYER = 'BUYER',
+    SELLER = 'SELLER'
 }
 
 export class User {
-    id: string;
+    id: any;
     email: string;
     full_name: string;
     password: string;
     user_role: UserRole;
-    cart?: Cart[];
+    cart: object;
     voucher?: Voucher;
     created_at: Date;
     updated_at: Date;

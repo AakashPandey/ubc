@@ -5,6 +5,11 @@ export class CreateProductDto {
     @IsNotEmpty()
     name: string;
 
+    // to;do remove after auth impl
+    @IsString()
+    @IsNotEmpty()
+    seller_id: string;
+
     @IsString()
     @IsOptional()
     image: string;

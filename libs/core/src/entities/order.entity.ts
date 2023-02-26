@@ -12,9 +12,9 @@ export enum OrderStatus {
 export class Order {
     id: string;
     user_id: string;
-    products: Cart[];
+    products: object;
     total: number;
-    voucher?: Voucher;
+    voucher_code?: string;
     status: OrderStatus;
     created_at: Date;
     updated_at: Date;

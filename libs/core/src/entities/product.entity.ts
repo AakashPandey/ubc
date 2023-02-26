@@ -1,11 +1,11 @@
 export class Product {
-    id: string;
+    sku: any;
     name: string;
     description: string;
     image: string;
     price: number;
     inventory: number;
-    seller_id: string;
+    seller: string;
     created_at: Date;
     updated_at: Date;
 }

@@ -1,15 +1,16 @@
-import {IsNotEmpty} from "class-validator"
+import { Cart } from "@ub-kart/core";
+import {IsNotEmpty, IsOptional, IsString} from "class-validator"
 
 export class CreateOrderDto {
     @IsString()
     @IsNotEmpty()
-    user_id: string,
+    user_id: string;
 
     @IsString()
     @IsNotEmpty()
-    products: array,
+    products: Array<Cart>;
 
     @IsString()
     @IsOptional()
-    voucher_code: string,
+    voucher_code: string;
 }
