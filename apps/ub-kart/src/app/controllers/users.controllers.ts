@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from "@nestjs/common";
-import { CartDto, CartItemCountDto, CreateUserDto } from "@ub-kart/core";
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from "@nestjs/common";
+import { CartDto, CreateUserDto } from "@ub-kart/core";
 import { UsersUseCases } from "../use-cases/users/users.usecases";
 
 @Controller('users')

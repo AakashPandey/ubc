@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateProductDto, IDataServices, Product, SellerProductRelation, User } from "@ub-kart/core";
+import { CreateProductDto, IDataServices, Product, User } from "@ub-kart/core";
 import { StaffProductsFactoryService } from "./staff-products-factory.service";
 
 
@@ -16,11 +16,10 @@ export class StaffProductsUseCases {
         );
          // to;do - add verify user role admin/seller   
         let createdProduct: Product;
-        let createdSellerProductRelation: SellerProductRelation
         try {
             createdProduct = await this.dataService.products.create(newProduct);
             const newRelation = this.staffProductsFactoryService.createNewSellerProductRelation(newProduct.seller, createdProduct.sku);
-            createdSellerProductRelation = await this.dataService.sellerProductRelations.create(newRelation);
+            await this.dataService.sellerProductRelations.create(newRelation);
             return createdProduct;
         } catch(e) {
             console.log(e);

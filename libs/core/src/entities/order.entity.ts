@@ -1,6 +1,3 @@
-import { Cart } from './cart.entity';
-import { Voucher } from './voucher.entity';
-
 export enum OrderStatus {
     PLACED = 'PLACED',
     PROCESSING = 'PROCESSING',

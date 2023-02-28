@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { BuyerOrderRelation, Cart, DiscountLog, Order, OrderStatus, Voucher } from "@ub-kart/core";
+import { BuyerOrderRelation, DiscountLog, Order, OrderStatus, Voucher } from "@ub-kart/core";
 import { randomUUID } from "crypto";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Uuid = require('cassandra-driver').types.Uuid;
