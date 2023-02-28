@@ -1,13 +1,9 @@
-import { OrderStatus, UserRole } from "@ub-kart/core";
 import { Column, CreateDateColumn, Entity, UpdateDateColumn } from "nestjs-cassandra";
 
 @Entity({
     keyspace: 'ubkart',
     table_name: 'products',
-    key: ['sku', 'created_at'],
-    clustering_order: {
-        created_at: 'desc'
-    }
+    key: ['sku']
 })
 
 export class ProductModel {

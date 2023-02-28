@@ -1,8 +1,8 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { IDataServices } from 'libs/core/src/abstracts/data-services/data-services.abstract';
+import { IDataServices } from '@ub-kart/core';
 import { InjectRepository, Repository } from 'nestjs-cassandra';
 import { CassandraGenericRepository } from './cassandra-generic-repo';
-import { BuyerOrderRelationModel, OrderModel, ProductModel, SellerProductRelationModel, UserModel } from './model';
+import { BuyerOrderRelationModel, DiscountLogModel, OrderModel, ProductModel, SellerProductRelationModel, UserModel } from './model';
 import { CartModel } from './model/cart-model';
 
 @Injectable()
@@ -15,6 +15,7 @@ export class CassandraDataServices
     sellerProductRelations: CassandraGenericRepository<SellerProductRelationModel>;
     buyerOrderRelations: CassandraGenericRepository<BuyerOrderRelationModel>;
     carts: CassandraGenericRepository<CartModel>;
+    vouchers: CassandraGenericRepository<DiscountLogModel>;
 
   constructor(
     @InjectRepository(UserModel)
@@ -34,6 +35,9 @@ export class CassandraDataServices
 
     @InjectRepository(CartModel)
     private readonly cartRepository: Repository<CartModel>,
+
+    @InjectRepository(DiscountLogModel)
+    private readonly voucherRepository: Repository<DiscountLogModel>,
   ) {}
 
 
@@ -56,6 +60,10 @@ export class CassandraDataServices
     );
     this.carts = new CassandraGenericRepository(
       this.cartRepository
+    );
+
+    this.vouchers = new CassandraGenericRepository(
+      this.voucherRepository
     );
   }
 }

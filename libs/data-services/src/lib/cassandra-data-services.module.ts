@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { BuyerOrderRelation, SellerProductRelation, Product, User, Order } from '@ub-kart/core';
-import { IDataServices } from 'libs/core/src/abstracts/data-services/data-services.abstract';
+import { IDataServices } from '@ub-kart/core';
 import { CassandraModule } from 'nestjs-cassandra';
 import { CassandraDataServices } from './cassandra-data-services';
-import { BuyerOrderRelationModel, OrderModel, ProductModel, SellerProductRelationModel, UserModel } from './model';
+import { BuyerOrderRelationModel, DiscountLogModel, OrderModel, ProductModel, SellerProductRelationModel, UserModel } from './model';
 import { CartModel } from './model/cart-model';
 
 @Module({
@@ -40,7 +39,8 @@ import { CartModel } from './model/cart-model';
         ProductModel,
         UserModel,
         OrderModel,
-        CartModel
+        CartModel,
+        DiscountLogModel
     ]),
   ],
   providers: [

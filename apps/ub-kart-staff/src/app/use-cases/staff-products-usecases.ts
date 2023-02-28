@@ -34,4 +34,41 @@ export class StaffProductsUseCases {
         const productIds = res.map(entry => entry.product);
         return productIds;
     }
+
+    async getAllDiscounts(){
+        const response = {};
+        response['codes'] = [];
+        response['total_discount'] = 0;
+
+        const discounts = await this.dataService.vouchers.getAllByQuery({});
+        for (const entry of discounts) {
+            const voucher = {};
+            voucher['code'] = entry.code;
+            voucher['redeemed_by'] = entry.user_id;
+            voucher['redeemed_on'] = entry.created_at; 
+            voucher['discount'] = entry.discount;
+            response['codes'].push(voucher);
+            response['total_discount'] += entry.discount;
+            
+        }
+
+        return response;
+    }
+
+    async getAllSales() {
+        const response = {};
+        response['items_sold'] = 0;
+        response['amount_sales'] = 0;
+
+        const sales = await this.dataService.orders.getAllByQuery({});
+        for (const entry of sales) {
+            response['amount_sales'] += entry.total;
+            if(entry.products!=null){
+                entry.products.forEach((product)=>{
+                    response['items_sold'] += Object.values(product)[0];
+                });
+            }
+        }
+        return response;
+    }
 }

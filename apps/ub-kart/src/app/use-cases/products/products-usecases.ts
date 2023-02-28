@@ -11,7 +11,7 @@ export class ProductsUseCases {
     ) {}
 
     async getAllProducts() {
-        const allProducts = await this.dataService.products.getAll();
+        const allProducts = await this.dataService.products.getAllByQuery({});
         return allProducts;
     }
 }

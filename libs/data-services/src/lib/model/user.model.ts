@@ -1,4 +1,4 @@
-import { UserRole } from "@ub-kart/core";
+import { UserRole, Voucher } from "@ub-kart/core";
 import { Column, CreateDateColumn, Entity, UpdateDateColumn } from "nestjs-cassandra";
 
 @Entity({
@@ -20,6 +20,9 @@ export class UserModel {
 
     @Column({type: 'text'})
     password: string;
+
+    @Column({type: 'map', typeDef: '<text, text>'})
+    voucher: Voucher;
 
     @Column({type: 'text'})
     user_role: UserRole;

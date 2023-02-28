@@ -16,10 +16,27 @@ export class StaffProductsController {
         return product;
     }
 
-    @Get(':seller_id')
+    @Get('all-discounts')
+    async getAllDiscounts(){
+        const discounts = await this.staffProductsUseCases.getAllDiscounts();
+        return discounts;
+    }
+
+    @Get('all-sales')
+    async getSales(){
+        const sales = await this.staffProductsUseCases.getAllSales();
+        return sales;
+    }
+
+    @Get('/all/:seller_id')
     async getAllBySeller(@Req() req, @Param('seller_id') seller_id: string) {
         const products = await this.staffProductsUseCases.getBySeller(seller_id);
         return products;
     }
 
+
+
 }
+
+
+

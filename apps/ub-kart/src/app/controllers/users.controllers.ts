@@ -22,24 +22,30 @@ export class UsersController {
         return user;
     }
 
-    // add one by one products to cart
+    @Get('cart/:email')
+    async getCart(@Param('email') email: string) {
+        const cart = await this.usersUseCases.getCart(email);
+        return cart;
+    }
 
     @Put('cart/:email')
     async addToCart(@Param('email') email: string, @Body() cartDto: CartDto) {
-        const cart = await this.usersUseCases.updateCart(email, cartDto);
+        const cart = await this.usersUseCases.addToCart(email, cartDto);
         return cart;
     }
 
-    @Patch('cart/:email')
-    async setItemCount(@Param('email') email: string, @Body() cartItemCountDto: CartItemCountDto) {
-        const cart = await this.usersUseCases.setItemCount(email, cartItemCountDto);
-        return cart;
-    }
-    
     @Delete('cart/:email')
     async clearCart(@Param('email') email: string) {
-        const cart = await this.usersUseCases.updateCart(email, cartDto);
+        const cart = await this.usersUseCases.clearCart(email);
         return cart;
     }
+
+    // @Patch('cart/:email')
+    // async setItemCount(@Param('email') email: string, @Body() cartItemCountDto: CartItemCountDto) {
+    //     const cart = await this.usersUseCases.setItemCount(email, cartItemCountDto);
+    //     return cart;
+    // }
+    
+
 
 }

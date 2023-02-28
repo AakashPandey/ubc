@@ -1,5 +1,5 @@
-import { Cart } from "@ub-kart/core";
 import {IsNotEmpty, IsOptional, IsString} from "class-validator"
+import { Cart } from "../../entities/cart.entity";
 
 export class CreateOrderDto {
     @IsString()

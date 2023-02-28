@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CartDto, CartItemCountDto, CreateUserDto, IDataServices, User } from "@ub-kart/core";
+import { CartDto, CreateUserDto, IDataServices, User } from "@ub-kart/core";
 import { UsersFactoryService } from "./users-factory.service";
 
 @Injectable()
@@ -35,14 +35,44 @@ export class UsersUseCases {
         }
     }
 
-    async setItemCount(email: string,  cartItemCountDto: CartItemCountDto) {
-        let responseUser: User;
+    async addToCart(email: string,  cartDto: CartDto) {
         try {
-            const user = await this.dataService.users.get('email', email);
-            const userNewCart = this.usersFactoryService.updateCart(user, CartItemCountDto);
-            
+            let cart = this.usersFactoryService.addToCart(email, cartDto);
+            cart = await this.dataService.carts.create(cart);
+            return cart;
+        } catch(e){
+            console.log(e);
+            throw e;
+        }       
+    }
 
-            return responseUser;
+    async getCart(email: string) {
+        try {
+            const cart = await this.dataService.carts.getAllByQuery({email:email});
+            const response = {};
+            response['items'] = [];
+            let total = 0;
+            if(cart!=null) {
+                for (const item of cart) {
+                    const product = await this.dataService.products.getByQuery({sku:item.sku});
+                    total += product.price * item.quantity;
+                    item.price = product.price;
+                    item.product_name = product.name;
+                    response['items'].push(item);
+                }
+                response['total'] = total;
+            }
+            return response;
+        } catch(e){
+            console.log(e);
+            throw e;
+        }       
+    }
+
+    async clearCart(email: string) {
+        try {
+            await this.dataService.carts.delete({email: email});
+            return { success: true }
         } catch(e){
             console.log(e);
             throw e;

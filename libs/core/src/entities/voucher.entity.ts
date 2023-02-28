@@ -1,4 +1,4 @@
 export class Voucher {
-    voucher_code: String;
-    discount: number;
+    voucher_code: string;
+    discount: string;
 }

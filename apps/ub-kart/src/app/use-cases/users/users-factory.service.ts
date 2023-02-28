@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CartDto, CreateUserDto, User, UserRole } from "@ub-kart/core";
+import { Cart, CartDto, CreateUserDto, User, UserRole } from "@ub-kart/core";
 import { randomUUID } from "crypto";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Uuid = require('cassandra-driver').types.Uuid;
@@ -15,8 +15,11 @@ export class UsersFactoryService {
         return newUser;
     }
 
-    updateCart(user: User, cartDto: CartDto) {
-        // user.cart = cartDto;
-        // return user;
+    addToCart(email: string, cartDto: CartDto) {
+        const cart = new Cart();
+        cart.email = email;
+        cart.sku = Uuid.fromString(cartDto.sku);
+        cart.quantity = cartDto.quantity;
+        return cart;
     }
 }

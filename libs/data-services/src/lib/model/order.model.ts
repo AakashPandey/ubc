@@ -4,10 +4,7 @@ import { Column, CreateDateColumn, Entity, UpdateDateColumn } from "nestjs-cassa
 @Entity({
     keyspace: 'ubkart',
     table_name: 'orders',
-    key: ['status', 'created_at'],
-    clustering_order: {
-        created_at: 'desc'
-    }
+    key: ['id']
 })
 
 export class OrderModel {
@@ -17,11 +14,14 @@ export class OrderModel {
     @Column({type: 'uuid'})
     user_id: any;
 
-    @Column({type: 'map', typeDef: '<uuid, int>'})
-    products: object;
+    @Column({type: 'frozen', typeDef: '<set<map<uuid, int>>>'})
+    products: Array<Map<any, number>>;
 
     @Column({type: 'float'})
     total: number;
+
+    @Column({type: 'float'})
+    discount: number;
 
     @Column({type: 'text'})
     voucher_code: string;

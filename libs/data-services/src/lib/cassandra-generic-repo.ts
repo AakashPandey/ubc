@@ -2,7 +2,7 @@ import { FindQuery, Repository } from 'nestjs-cassandra';
 import { lastValueFrom } from 'rxjs';
 
 import { isUUID } from 'class-validator';
-import { IGenericRepository } from 'libs/core/src/abstracts/data-services/generic-repo.abstract';
+import { IGenericRepository } from '@ub-kart/core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Uuid = require('cassandra-driver').types.Uuid;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -26,23 +26,9 @@ export class CassandraGenericRepository<T>
     return obj;
   }
 
-  async getAll(): Promise<T[]> {
-    return await lastValueFrom(this._repo.find({}));
-  }
-
-  async getById(id: any): Promise<T> {
-    const query = {};
-    query['id'] = id;
-    return await lastValueFrom(this._repo.findOne(this.parseUUID(query)));
-  }
-
   async get(keyname: any, keyval: any): Promise<T> {
     const query = {};
     query[keyname] = keyval;
-    return await lastValueFrom(this._repo.findOne(query));
-  }
-
-  async getQ(query: any): Promise<T> {
     return await lastValueFrom(this._repo.findOne(query));
   }
 
@@ -64,75 +50,8 @@ export class CassandraGenericRepository<T>
             $like: query,
           },
         }),
-        {
-          // select: ['content'],
-        }
       )
     );
-  }
-
-  async getQN(query: any, count: number): Promise<T[]> {
-    try {
-      return await lastValueFrom(
-        this._repo.find(<FindQuery<T>>(<unknown>{
-          sender: query.sender,
-          receiver: query.receiver,
-          $orderby: {
-            $desc: 'id',
-          },
-          $limit: count,
-        }))
-      );
-    } catch (e) {
-      console.log('DB ERROR', e);
-      throw e;
-    }
-  }
-
-  async getLastN(
-    id: any,
-    count: number,
-    after: any,
-    before: any
-  ): Promise<T[]> {
-    try {
-      if (after) {
-        return await lastValueFrom(
-          this._repo.find(<FindQuery<T>>(<unknown>{
-            receiver: id,
-            id: { $gt: after },
-            $orderby: {
-              $desc: 'id',
-            },
-            $limit: count,
-          }))
-        );
-      } else if (before) {
-        return await lastValueFrom(
-          this._repo.find(<FindQuery<T>>(<unknown>{
-            receiver: id,
-            id: { $lt: before },
-            $orderby: {
-              $desc: 'id',
-            },
-            $limit: count,
-          }))
-        );
-      } else {
-        return await lastValueFrom(
-          this._repo.find(<FindQuery<T>>(<unknown>{
-            receiver: id,
-            $orderby: {
-              $desc: 'id',
-            },
-            $limit: count,
-          }))
-        );
-      }
-    } catch (e) {
-      console.log('DB ERROR', e);
-      throw e;
-    }
   }
 
   async addToSet(query: any, entry: any): Promise<T> {
@@ -178,7 +97,7 @@ export class CassandraGenericRepository<T>
     );
   }
 
-  async update(query: any, item: Partial<T>, conditions?: Partial<T>) {
+  async update(query: object, item: Partial<T>, conditions?: Partial<T>) {
     for (const key in query) {
       if (isUUID(query[key])) {
         query[key] = Uuid.fromString(query[key]);

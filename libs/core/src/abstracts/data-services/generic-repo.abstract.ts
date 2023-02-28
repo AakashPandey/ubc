@@ -1,30 +1,15 @@
-export abstract class IGenericRepository<T> {
-    abstract getAll(): Promise<T[]>;
-  
+export abstract class IGenericRepository<T> {  
     abstract get(keyname: any, keyval: any): Promise<T>;
-  
-    abstract getById(id: any): Promise<T>;
-  
+    
     abstract create(item: T): Promise<T>;
   
     abstract createTTL(item: T, s: any): Promise<T>;
   
     abstract update(
-      id: any,
+      query: object,
       item: Partial<T>,
       conditions?: Partial<T>
     ): Promise<T>;
-  
-    abstract getLastN(
-      id: any,
-      count: number,
-      after: any,
-      before: any
-    ): Promise<T[]>;
-  
-    abstract getQN(query: any, count: number): Promise<T[]>;
-  
-    abstract getQ(query: any): Promise<T>;
   
     abstract addToSet(query: any, entry: any): Promise<T>;
   

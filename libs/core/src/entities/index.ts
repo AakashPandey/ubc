@@ -5,3 +5,4 @@ export * from './user.entity';
 export * from './voucher.entity';
 export * from './seller-product-relation.entity';
 export * from './buyer-order-relation.entity';
+export * from './discount-log.entity';
