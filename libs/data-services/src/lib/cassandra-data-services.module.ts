@@ -5,6 +5,7 @@ import { IDataServices } from 'libs/core/src/abstracts/data-services/data-servic
 import { CassandraModule } from 'nestjs-cassandra';
 import { CassandraDataServices } from './cassandra-data-services';
 import { BuyerOrderRelationModel, OrderModel, ProductModel, SellerProductRelationModel, UserModel } from './model';
+import { CartModel } from './model/cart-model';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { BuyerOrderRelationModel, OrderModel, ProductModel, SellerProductRelatio
         SellerProductRelationModel,
         ProductModel,
         UserModel,
-        OrderModel
+        OrderModel,
+        CartModel
     ]),
   ],
   providers: [

@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, Post, Req } from "@nestjs/common";
-import { CreateUserDto } from "@ub-kart/core";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from "@nestjs/common";
+import { CartDto, CartItemCountDto, CreateUserDto } from "@ub-kart/core";
 import { UsersUseCases } from "../use-cases/users/users.usecases";
 
 @Controller('users')
@@ -22,5 +22,24 @@ export class UsersController {
         return user;
     }
 
+    // add one by one products to cart
+
+    @Put('cart/:email')
+    async addToCart(@Param('email') email: string, @Body() cartDto: CartDto) {
+        const cart = await this.usersUseCases.updateCart(email, cartDto);
+        return cart;
+    }
+
+    @Patch('cart/:email')
+    async setItemCount(@Param('email') email: string, @Body() cartItemCountDto: CartItemCountDto) {
+        const cart = await this.usersUseCases.setItemCount(email, cartItemCountDto);
+        return cart;
+    }
+    
+    @Delete('cart/:email')
+    async clearCart(@Param('email') email: string) {
+        const cart = await this.usersUseCases.updateCart(email, cartDto);
+        return cart;
+    }
 
 }

@@ -1,17 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { CreateProductDto, IDataServices, Product, SellerProductRelation, User } from "@ub-kart/core";
-import { ProductsFactoryService } from "./products-factory.service";
+import { StaffProductsFactoryService } from "./staff-products-factory.service";
 
 
 @Injectable()
-export class ProductsUseCases {
+export class StaffProductsUseCases {
     constructor(
-        private productsFactoryService: ProductsFactoryService,
+        private staffProductsFactoryService: StaffProductsFactoryService,
         private dataService: IDataServices,
     ) {}
 
     async create(user: User, createProductDto: CreateProductDto) {
-        const newProduct = this.productsFactoryService.createNewProduct(
+        const newProduct = this.staffProductsFactoryService.createNewProduct(
             user, createProductDto
         );
          // to;do - add verify user role admin/seller   
@@ -19,7 +19,7 @@ export class ProductsUseCases {
         let createdSellerProductRelation: SellerProductRelation
         try {
             createdProduct = await this.dataService.products.create(newProduct);
-            const newRelation = this.productsFactoryService.createNewSellerProductRelation(newProduct.seller, createdProduct.sku);
+            const newRelation = this.staffProductsFactoryService.createNewSellerProductRelation(newProduct.seller, createdProduct.sku);
             createdSellerProductRelation = await this.dataService.sellerProductRelations.create(newRelation);
             return createdProduct;
         } catch(e) {
@@ -29,8 +29,9 @@ export class ProductsUseCases {
     }
 
     async getBySeller(seller_id: string) {
-        const seller = this.productsFactoryService.parseId(seller_id);
-        const productIds = this.dataService.sellerProductRelations.getAllByQuery({seller: seller});
+        const seller = this.staffProductsFactoryService.parseId(seller_id);
+        const res = await this.dataService.sellerProductRelations.getAllByQuery({seller: seller});
+        const productIds = res.map(entry => entry.product);
         return productIds;
     }
 }

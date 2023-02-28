@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Param, Post, Req } from "@nestjs/common";
 import { CreateProductDto } from "@ub-kart/core";
-import { ProductsUseCases } from "../use-cases/products-usecases";
+import { StaffProductsUseCases } from "../use-cases/staff-products-usecases";
 
-@Controller('products')
-export class ProductsController {
-    constructor(private productsUseCases: ProductsUseCases) {}
+@Controller('staff-products')
+export class StaffProductsController {
+    constructor(private staffProductsUseCases: StaffProductsUseCases) {}
     @Post()
     async create(@Req() req, @Body() createProductDto: CreateProductDto) {
       
-        const product = await this.productsUseCases.create(
+        const product = await this.staffProductsUseCases.create(
             req.user,
             createProductDto
         );
@@ -18,7 +18,7 @@ export class ProductsController {
 
     @Get(':seller_id')
     async getAllBySeller(@Req() req, @Param('seller_id') seller_id: string) {
-        const products = await this.productsUseCases.getBySeller(seller_id);
+        const products = await this.staffProductsUseCases.getBySeller(seller_id);
         return products;
     }
 

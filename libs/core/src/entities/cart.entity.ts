@@ -1,5 +1,6 @@
 export class Cart {
-    product_id: string;
+    email: string;
+    sku: string;
     product_name: string;
     price: number;
     quantity: number;

@@ -1,4 +1,4 @@
-import { BuyerOrderRelation, Order, Product, SellerProductRelation, User } from "../../entities";
+import { BuyerOrderRelation, Cart, Order, Product, SellerProductRelation, User } from "../../entities";
 import { IGenericRepository } from "./generic-repo.abstract";
 
 export abstract class IDataServices {
@@ -7,4 +7,5 @@ export abstract class IDataServices {
     abstract products: IGenericRepository<Product>;
     abstract sellerProductRelations: IGenericRepository<SellerProductRelation>;
     abstract buyerOrderRelations: IGenericRepository<BuyerOrderRelation>;
+    abstract carts: IGenericRepository<Cart>;
 }

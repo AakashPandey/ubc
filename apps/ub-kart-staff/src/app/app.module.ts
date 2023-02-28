@@ -3,14 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsController } from './controllers/products.controller';
-import { ProductsUseCasesModule } from './use-cases/products-usecases.module';
+import { StaffProductsController } from './controllers/staff-products.controller';
+import { StaffProductsUseCasesModule } from './use-cases/staff-products-usecases.module';
 
 @Module({
   imports: [ConfigModule.forRoot({isGlobal: true}),
-    ProductsUseCasesModule
+    StaffProductsUseCasesModule
   ],
-  controllers: [AppController, ProductsController],
+  controllers: [AppController, StaffProductsController],
   providers: [AppService],
 })
 export class AppModule {}

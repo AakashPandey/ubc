@@ -1,28 +1,26 @@
-import { UserRole } from "@ub-kart/core";
 import { Column, CreateDateColumn, Entity, UpdateDateColumn } from "nestjs-cassandra";
 
 @Entity({
     keyspace: 'ubkart',
-    table_name: 'users',
-    key: ['email'],
-    
+    table_name: 'carts',
+    key: ['email', 'sku'],
 })
 
-export class UserModel {
-    @Column({type: 'uuid'})
-    id: any;
-
+export class CartModel {
     @Column({type: 'text'})
     email: string;
 
+    @Column({type: 'uuid'})
+    sku: any;
+    
     @Column({type: 'text'})
-    full_name: string;
+    product_name: string;
 
-    @Column({type: 'text'})
-    password: string;
+    @Column({type: 'float'})
+    price: number;
 
-    @Column({type: 'text'})
-    user_role: UserRole;
+    @Column({type: 'int'})
+    quantity: number;
 
     @CreateDateColumn()
     created_at: Date;

@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 const Uuid = require('cassandra-driver').types.Uuid;
 
 @Injectable()
-export class ProductsFactoryService {
+export class StaffProductsFactoryService {
     createNewProduct(user: User, createProductDto: CreateProductDto) {
         const newProduct = new Product();
         newProduct.sku =  Uuid.fromString(randomUUID());

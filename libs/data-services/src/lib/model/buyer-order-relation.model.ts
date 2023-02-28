@@ -2,7 +2,7 @@ import { Column, Entity } from "nestjs-cassandra";
 
 @Entity({
     keyspace: 'ubkart',
-    table_name: 'seller_product_relation',
+    table_name: 'buyer_order_relation',
     key: ['buyer', 'order']
     
 })

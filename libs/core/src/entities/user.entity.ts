@@ -12,7 +12,6 @@ export class User {
     full_name: string;
     password: string;
     user_role: UserRole;
-    cart: object;
     voucher?: Voucher;
     created_at: Date;
     updated_at: Date;
