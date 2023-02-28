@@ -28,3 +28,6 @@ docker pull cassandra
 docker run --name cassandra-dev -p 9042:9042 -d cassandra
 
 docker start cassandra-dev
+
+nx serve ub-kart
+nx serve ub-kart-staff
